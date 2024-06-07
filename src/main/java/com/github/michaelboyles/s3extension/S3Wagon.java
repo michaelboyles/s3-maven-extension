@@ -43,9 +43,12 @@ public final class S3Wagon extends ListeningWagon {
 
     @Override
     public void connect(Repository source, AuthenticationInfo authenticationInfo, ProxyInfoProvider proxyInfoProvider) {
+        fireSessionOpening();
         setRepository(source);
         var credentials = getAuthChain(authenticationInfo);
         this.s3 = S3Client.builder().credentialsProvider(credentials).build();
+        fireSessionOpened();
+        fireSessionLoggedIn();
     }
 
     @Override
