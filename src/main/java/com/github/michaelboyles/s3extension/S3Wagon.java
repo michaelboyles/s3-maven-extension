@@ -1,9 +1,7 @@
 package com.github.michaelboyles.s3extension;
 
-import org.apache.maven.wagon.ConnectionException;
 import org.apache.maven.wagon.ResourceDoesNotExistException;
 import org.apache.maven.wagon.TransferFailedException;
-import org.apache.maven.wagon.authentication.AuthenticationException;
 import org.apache.maven.wagon.authentication.AuthenticationInfo;
 import org.apache.maven.wagon.authorization.AuthorizationException;
 import org.apache.maven.wagon.proxy.ProxyInfoProvider;
@@ -18,6 +16,7 @@ import software.amazon.awssdk.services.s3.model.HeadObjectResponse;
 import software.amazon.awssdk.services.s3.model.NoSuchKeyException;
 import software.amazon.awssdk.services.s3.model.ObjectCannedACL;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.services.s3.model.S3Exception;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -43,7 +42,7 @@ public final class S3Wagon extends ListeningWagon {
     }
 
     @Override
-    public void connect(Repository source, AuthenticationInfo authenticationInfo, ProxyInfoProvider proxyInfoProvider) throws ConnectionException, AuthenticationException {
+    public void connect(Repository source, AuthenticationInfo authenticationInfo, ProxyInfoProvider proxyInfoProvider) {
         setRepository(source);
         var credentials = getAuthChain(authenticationInfo);
         this.s3 = S3Client.builder().credentialsProvider(credentials).build();
@@ -71,10 +70,15 @@ public final class S3Wagon extends ListeningWagon {
         catch (NoSuchKeyException e) {
             throw new ResourceDoesNotExistException("Resource " + resource + " does not exist in the repository", e);
         }
-        catch (Exception e) {
-            throw new TransferFailedException("Transfer failed", e);
+        catch (S3Exception e) {
+            if (e.statusCode() == 403) {
+                throw new AuthorizationException("Bad S3 credentials", e);
+            }
+            throw new TransferFailedException("S3 transfer failed", e);
         }
-        // TODO how about AuthorizationException?
+        catch (Exception e) {
+            throw new TransferFailedException("S3 transfer failed", e);
+        }
     }
 
     private String getBucketName() {
@@ -148,8 +152,14 @@ public final class S3Wagon extends ListeningWagon {
             RequestBody body = RequestBody.fromInputStream(inputStream, source.length());
             s3.putObject(putObjectRequest, body);
         }
+        catch (S3Exception e) {
+            if (e.statusCode() == 403) {
+                throw new AuthorizationException("Bad S3 credentials", e);
+            }
+            throw new TransferFailedException("S3 transfer failed", e);
+        }
         catch (Exception e) {
-            throw new TransferFailedException("Failed to transfer " + source, e);
+            throw new TransferFailedException("S3 transfer failed", e);
         }
     }
 
