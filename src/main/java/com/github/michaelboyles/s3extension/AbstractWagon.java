@@ -1,12 +1,9 @@
 package com.github.michaelboyles.s3extension;
 
 import org.apache.maven.wagon.ConnectionException;
-import org.apache.maven.wagon.ResourceDoesNotExistException;
-import org.apache.maven.wagon.TransferFailedException;
 import org.apache.maven.wagon.Wagon;
 import org.apache.maven.wagon.authentication.AuthenticationException;
 import org.apache.maven.wagon.authentication.AuthenticationInfo;
-import org.apache.maven.wagon.authorization.AuthorizationException;
 import org.apache.maven.wagon.proxy.ProxyInfo;
 import org.apache.maven.wagon.proxy.ProxyInfoProvider;
 import org.apache.maven.wagon.repository.Repository;
@@ -105,17 +102,12 @@ abstract class AbstractWagon implements Wagon {
     }
 
     @Override
-    public List<String> getFileList(String destinationDirectory) throws TransferFailedException, ResourceDoesNotExistException, AuthorizationException {
+    public List<String> getFileList(String destinationDirectory) {
         throw new UnsupportedOperationException("getFileList is not supported");
     }
 
     @Override
-    public boolean resourceExists(String resourceName) throws TransferFailedException, AuthorizationException {
-        throw new UnsupportedOperationException("resourceExists is not supported");
-    }
-
-    @Override
-    public void putDirectory(File sourceDirectory, String destinationDirectory) throws TransferFailedException, ResourceDoesNotExistException, AuthorizationException {
+    public void putDirectory(File sourceDirectory, String destinationDirectory) {
         throw new UnsupportedOperationException("putDirectory is not supported");
     }
 }

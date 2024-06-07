@@ -162,6 +162,22 @@ public final class S3Wagon extends ListeningWagon {
     }
 
     @Override
+    public boolean resourceExists(String resourceName) {
+        try {
+            s3.headObject(
+                HeadObjectRequest.builder()
+                    .bucket(getBucketName())
+                    .key(getKey(resourceName))
+                    .build()
+            );
+            return true;
+        }
+        catch (NoSuchKeyException e) {
+            return false;
+        }
+    }
+
+    @Override
     public void disconnect() {
         fireSessionDisconnecting();
         fireSessionLoggedOff();
