@@ -1,6 +1,10 @@
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/michaelboyles/s3-maven-extension/build.yml?branch=develop)](https://github.com/michaelboyles/s3-maven-extension/actions)
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/michaelboyles/s3-maven-extension?sort=semver)](https://github.com/michaelboyles/s3-maven-extension/releases)
+[![GitHub](https://img.shields.io/github/license/michaelboyles/s3-maven-extension)](https://github.com/michaelboyles/s3-maven-extension/blob/develop/LICENSE)
+
 This [Maven extension](https://maven.apache.org/guides/mini/guide-using-extensions.html) provides support for
-[Amazon S3](https://aws.amazon.com/s3/). It provides a [Maven "wagon"](https://maven.apache.org/wagon/) - a kind of
-transport abstraction - which lets you use the S3 scheme `s3://` in place of HTTP(S).
+Amazon [S3](https://aws.amazon.com/s3/). It provides a ["wagon"](https://maven.apache.org/wagon/) (a transport
+abstraction) which lets you use the S3 scheme `s3://` in place of HTTP(S).
 
 ---
 
