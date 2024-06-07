@@ -50,10 +50,6 @@ abstract class ListeningWagon extends AbstractWagon {
         notifySessionListeners(SessionEvent.SESSION_DISCONNECTED, SessionListener::sessionDisconnected);
     }
 
-    protected void fireSessionConnectionRefused() {
-        notifySessionListeners(SessionEvent.SESSION_CONNECTION_REFUSED, SessionListener::sessionConnectionRefused);
-    }
-
     protected void fireSessionLoggedIn() {
         notifySessionListeners(SessionEvent.SESSION_LOGGED_IN, SessionListener::sessionLoggedIn);
     }
@@ -66,19 +62,6 @@ abstract class ListeningWagon extends AbstractWagon {
         SessionEvent event = new SessionEvent(this, eventType);
         for (SessionListener listener : sessionListeners) {
             handler.accept(listener, event);
-        }
-    }
-
-    protected void fireSessionError(Exception error) {
-        SessionEvent event = new SessionEvent(this, error);
-        for (SessionListener listener : sessionListeners) {
-            listener.sessionError(event);
-        }
-    }
-
-    protected void fireSessionDebug(String message) {
-        for (SessionListener listener : sessionListeners) {
-            listener.debug(message);
         }
     }
 
@@ -155,22 +138,6 @@ abstract class ListeningWagon extends AbstractWagon {
             TransferEvent.TRANSFER_COMPLETED, TransferEvent.REQUEST_PUT, resource, localFile
         );
         notifyTransferListeners(event, TransferListener::transferCompleted);
-    }
-
-    protected void fireGetTransferError(Resource resource, Exception error) {
-        TransferEvent event = new TransferEvent(this, resource, error, TransferEvent.REQUEST_GET);
-        notifyTransferListeners(event, TransferListener::transferError);
-    }
-
-    protected void firePutTransferError(Resource resource, Exception error) {
-        TransferEvent event = new TransferEvent(this, resource, error, TransferEvent.REQUEST_PUT);
-        notifyTransferListeners(event, TransferListener::transferError);
-    }
-
-    protected void fireTransferDebug(String message) {
-        for (TransferListener listener : transferListeners) {
-            listener.debug(message);
-        }
     }
 
     private TransferEvent newTransferEvent(int eventType, int requestType, Resource resource, File localFile) {
