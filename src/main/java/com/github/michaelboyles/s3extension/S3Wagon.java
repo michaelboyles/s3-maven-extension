@@ -2,6 +2,7 @@ package com.github.michaelboyles.s3extension;
 
 import org.apache.maven.wagon.ResourceDoesNotExistException;
 import org.apache.maven.wagon.TransferFailedException;
+import org.apache.maven.wagon.Wagon;
 import org.apache.maven.wagon.authentication.AuthenticationInfo;
 import org.apache.maven.wagon.authorization.AuthorizationException;
 import org.apache.maven.wagon.proxy.ProxyInfoProvider;
@@ -33,6 +34,9 @@ import java.util.Optional;
 
 import static com.github.michaelboyles.s3extension.S3Auth.getAuthChain;
 
+/**
+ * A Maven {@link Wagon} which lets you use Amazon S3 as an artifact repository.
+ */
 public final class S3Wagon extends ListeningWagon {
     private S3Client s3;
 
