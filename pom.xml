@@ -6,7 +6,7 @@
 
     <groupId>io.github.michaelboyles</groupId>
     <artifactId>s3-maven-extension</artifactId>
-    <version>0.5.0-SNAPSHOT</version>
+    <version>${revision}</version>
 
     <name>S3 Maven Extension</name>
     <description>Maven wagon transport for Amazon S3</description>
@@ -31,6 +31,7 @@
     </scm>
 
     <properties>
+        <revision>0.5.0-SNAPSHOT</revision>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -113,11 +114,6 @@
                     <artifactId>maven-gpg-plugin</artifactId>
                     <version>3.2.4</version>
                 </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-deploy-plugin</artifactId>
-                    <version>3.1.2</version>
-                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -183,6 +179,22 @@
                         <phase>install</phase>
                     </execution>
                 </executions>
+                <configuration>
+                    <gpgArguments>
+                        <arg>--pinentry-mode</arg>
+                        <arg>loopback</arg>
+                    </gpgArguments>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.4.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>ossrh</publishingServerId>
+                    <tokenAuth>true</tokenAuth>
+                </configuration>
             </plugin>
         </plugins>
     </build>
