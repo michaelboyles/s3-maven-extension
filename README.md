@@ -14,7 +14,7 @@ Add the extension to the `<build>` section of your POM, e.g.
 ```xml
 <extensions>
    <extension>
-      <groupId>com.github.michaelboyles</groupId>
+      <groupId>io.github.michaelboyles</groupId>
       <artifactId>s3-maven-extension</artifactId>
       <version>0.5.0</version>
    </extension>
