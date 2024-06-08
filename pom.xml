@@ -8,6 +8,28 @@
     <artifactId>s3-maven-extension</artifactId>
     <version>0.5.0-SNAPSHOT</version>
 
+    <name>S3 Maven Extension</name>
+    <description>Maven wagon transport for Amazon S3</description>
+    <url>https://github.com/michaelboyles/s3-maven-extension</url>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/license/mit</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>Michael Boyles</name>
+            <email>michael@boyl.es</email>
+            <organizationUrl>https://github.com/michaelboyles</organizationUrl>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:git://github.com/michaelboyles/s3-maven-extension.git</connection>
+        <developerConnection>scm:git:ssh://github.com:michaelboyles/s3-maven-extension.git</developerConnection>
+        <url>https://github.com/michaelboyles/s3-maven-extension</url>
+    </scm>
+
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
@@ -100,6 +122,7 @@
                 </executions>
                 <configuration>
                     <outputDirectory>${project.basedir}/target</outputDirectory>
+                    <flattenMode>ossrh</flattenMode>
                 </configuration>
             </plugin>
             <plugin>
