@@ -1,4 +1,4 @@
-package com.github.michaelboyles.s3extension;
+package io.github.michaelboyles.s3extension;
 
 import org.apache.maven.wagon.authentication.AuthenticationInfo;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;

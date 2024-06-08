@@ -1,4 +1,4 @@
-package com.github.michaelboyles.s3extension;
+package io.github.michaelboyles.s3extension;
 
 import org.apache.maven.wagon.ResourceDoesNotExistException;
 import org.apache.maven.wagon.TransferFailedException;
@@ -32,8 +32,6 @@ import java.nio.file.StandardCopyOption;
 import java.time.Instant;
 import java.util.Optional;
 
-import static com.github.michaelboyles.s3extension.S3Auth.getAuthChain;
-
 /**
  * A Maven {@link Wagon} which lets you use Amazon S3 as an artifact repository.
  */
@@ -49,7 +47,7 @@ public final class S3Wagon extends ListeningWagon {
     public void connect(Repository source, AuthenticationInfo authenticationInfo, ProxyInfoProvider proxyInfoProvider) {
         fireSessionOpening();
         setRepository(source);
-        var credentials = getAuthChain(authenticationInfo);
+        var credentials = S3Auth.getAuthChain(authenticationInfo);
         this.s3 = S3Client.builder().credentialsProvider(credentials).build();
         fireSessionOpened();
         fireSessionLoggedIn();
