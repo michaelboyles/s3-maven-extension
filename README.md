@@ -21,7 +21,7 @@ Add the extension to the `<build>` section of your POM, e.g.
 </extensions>
 ```
 
-Specify the region of your S3 bucket using one of the follow methods, listed with highest precedence first. This uses
+Specify the region of your S3 bucket using one of the following methods, listed with highest precedence first. This uses
 [the default AWS SDK logic](https://sdk.amazonaws.com/java/api/2.25.67/software/amazon/awssdk/regions/providers/DefaultAwsRegionProviderChain.html):
 
 1. `aws.region` system property, i.e. `-Daws.region=my-region`
@@ -29,7 +29,7 @@ Specify the region of your S3 bucket using one of the follow methods, listed wit
 3. `{user.home}/.aws/credentials` and `{user.home}/.aws/config` files
 4. Container metadata (e.g. EC2)
 
-Specify your credentials using on the following methods, listed with highest precedence first.
+Specify your credentials using one of the following methods, listed with highest precedence first.
 
 1. `aws.accessKeyId`, `aws.secretAccessKey` and (optionally) `aws.sessionToken` [system properties](https://sdk.amazonaws.com/java/api/latest/software/amazon/awssdk/auth/credentials/SystemPropertyCredentialsProvider.html),
    e.g. `-Daws.accessKeyId=my-key`
@@ -80,7 +80,7 @@ maintained, and the Amazon SDK they are based on is being phased out.
 Major differences:
 
  - Removed support for plain HTTP
- - Wagon::getFileList and Wagon::putDirectory are not supported. Judging by
+ - `Wagon::getFileList` and `Wagon::putDirectory` are not supported. Judging by
    [AbstractWagon](https://github.com/apache/maven-wagon/blob/master/wagon-provider-api/src/main/java/org/apache/maven/wagon/AbstractWagon.java)
    they're optional, and I don't know what they're used for.
  - Won't create the bucket if it doesn't exist
