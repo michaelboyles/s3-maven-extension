@@ -16,7 +16,7 @@ Add the extension to the `<build>` section of your POM, e.g.
    <extension>
       <groupId>io.github.michaelboyles</groupId>
       <artifactId>s3-maven-extension</artifactId>
-      <version>0.5.0</version>
+      <version>0.5.1</version>
    </extension>
 </extensions>
 ```
