@@ -36,6 +36,9 @@ import java.util.Optional;
  * A Maven {@link Wagon} which lets you use Amazon S3 as an artifact repository.
  */
 public final class S3Wagon extends ListeningWagon {
+    private static final String NO_CACHE = "no-cache";
+    private static final String CACHE_FOREVER = "public,max-age=31536000,immutable";
+
     private S3Client s3;
 
     @Override
@@ -152,6 +155,7 @@ public final class S3Wagon extends ListeningWagon {
             .bucket(getBucketName())
             .key(getKey(destination.getName()))
             .acl(getAccessControlList().orElse(null))
+            .cacheControl(destination.getName().contains("maven-metadata.xml") ? NO_CACHE : CACHE_FOREVER)
             .build();
         try (InputStream inputStream = newUploadStream(source, destination)) {
             RequestBody body = RequestBody.fromInputStream(inputStream, source.length());
