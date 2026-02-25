@@ -21,25 +21,33 @@ Add the extension to the `<build>` section of your POM, e.g.
 </extensions>
 ```
 
-Specify the region of your S3 bucket using one of the following methods, listed with highest precedence first. This uses
-[the default AWS SDK logic](https://sdk.amazonaws.com/java/api/2.25.67/software/amazon/awssdk/regions/providers/DefaultAwsRegionProviderChain.html):
+### Specify AWS region
 
-1. `aws.region` system property, i.e. `-Daws.region=my-region`
+Specify the region of your S3 bucket using one of the following methods, listed with highest precedence first. This uses
+[the default AWS SDK logic](https://sdk.amazonaws.com/java/api/2.41.1/software/amazon/awssdk/regions/providers/DefaultAwsRegionProviderChain.html):
+
+1. `aws.region` system property, i.e. `-Daws.region=us-east-1`
 2. `AWS_REGION` environment variable
 3. `{user.home}/.aws/credentials` and `{user.home}/.aws/config` files
-4. Container metadata (e.g. EC2)
+4.  EC2 metadata service, if running in EC2
+
+### Specify credentials
 
 Specify your credentials using one of the following methods, listed with highest precedence first.
 
-1. `aws.accessKeyId`, `aws.secretAccessKey` and (optionally) `aws.sessionToken` [system properties](https://sdk.amazonaws.com/java/api/latest/software/amazon/awssdk/auth/credentials/SystemPropertyCredentialsProvider.html),
+Note: precedence is related to specificity; they are not listed in order of recommendation.
+
+1. `aws.accessKeyId`, `aws.secretAccessKey` and (optionally) `aws.sessionToken` [system properties](https://sdk.amazonaws.com/java/api/2.41.1/software/amazon/awssdk/auth/credentials/SystemPropertyCredentialsProvider.html),
    e.g. `-Daws.accessKeyId=my-key`
-2. `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and (optionally) `AWS_SESSION_TOKEN` [environment variables](https://sdk.amazonaws.com/java/api/2.25.67/software/amazon/awssdk/auth/credentials/EnvironmentVariableCredentialsProvider.html) 
-3. [Web identity token file](https://sdk.amazonaws.com/java/api/2.25.67/software/amazon/awssdk/auth/credentials/WebIdentityTokenFileCredentialsProvider.html)
+2. `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and (optionally) `AWS_SESSION_TOKEN` [environment variables](https://sdk.amazonaws.com/java/api/2.41.1/software/amazon/awssdk/auth/credentials/EnvironmentVariableCredentialsProvider.html) 
+3. [Web identity token file](https://sdk.amazonaws.com/java/api/2.41.1/software/amazon/awssdk/auth/credentials/WebIdentityTokenFileCredentialsProvider.html)
 4. The server 'username' and 'password' fields from Maven [settings.xml](https://maven.apache.org/settings.html#servers), where username is AWS access key ID, and password is
    AWS secret access key
-5. [Profile file](https://sdk.amazonaws.com/java/api/2.25.67/software/amazon/awssdk/auth/credentials/ProfileCredentialsProvider.html)
-6. [Container metadata](https://sdk.amazonaws.com/java/api/2.25.67/software/amazon/awssdk/auth/credentials/ContainerCredentialsProvider.html) (e.g. EC2)
-7. [EC2 Instance Metadata Service](https://sdk.amazonaws.com/java/api/latest/software/amazon/awssdk/auth/credentials/InstanceProfileCredentialsProvider.html)
+5. [Profile file](https://sdk.amazonaws.com/java/api/2.41.1/software/amazon/awssdk/auth/credentials/ProfileCredentialsProvider.html)
+6. [Container metadata service](https://sdk.amazonaws.com/java/api/2.41.1/software/amazon/awssdk/auth/credentials/ContainerCredentialsProvider.html) (e.g. EC2)
+7. [EC2 Instance Metadata Service](https://sdk.amazonaws.com/java/api/2.41.1/software/amazon/awssdk/auth/credentials/InstanceProfileCredentialsProvider.html)
+
+### Finish
 
 You're done! You can now use `s3://` scheme in the following format (base directory is optional):
 
