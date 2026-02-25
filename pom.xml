@@ -215,6 +215,7 @@
                             </execution>
                         </executions>
                         <configuration>
+                            <keyname>1AD76A33BFFD15DB90FACE570142197E034A03FC</keyname>
                             <gpgArguments>
                                 <arg>--pinentry-mode</arg>
                                 <arg>loopback</arg>
